@@ -47,7 +47,7 @@ export const StickySection = ({
 
     tl.fromTo(
       el.querySelectorAll("[data-fade]"),
-      { scale: 0.8, opacity: 0.2 },
+      { scale: 1, opacity: 1 },
       {
         scale: 1,
         opacity: 1,

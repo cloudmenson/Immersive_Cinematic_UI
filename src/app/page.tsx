@@ -10,6 +10,7 @@ import {
   VideoBackdrop,
   NatureSection,
   EnergySection,
+  TimelineSection,
 } from "@/widgets";
 
 export default function Home() {
@@ -36,6 +37,8 @@ export default function Home() {
         <HeroSection id="hero" />
 
         <NatureSection id="nature" />
+
+        <TimelineSection id="timeline" />
 
         <EnergySection id="energy" />
 

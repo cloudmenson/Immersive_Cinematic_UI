@@ -1,3 +1,4 @@
+import { Button } from "@/shared";
 import { StickySection } from "@/widgets";
 
 interface IFooterCTA {
@@ -19,12 +20,7 @@ export const FooterCTA = ({ id, duration, isBackground }: IFooterCTA) => {
           Explore the code, deploy, and watch the walkthrough.
         </p>
 
-        <a
-          href="#"
-          className="inline-block rounded-full bg-white px-6 py-3 font-semibold text-black cursor-pointer"
-        >
-          View Source
-        </a>
+        <Button text="View" />
       </div>
     </StickySection>
   );

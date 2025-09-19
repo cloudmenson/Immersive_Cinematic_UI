@@ -37,14 +37,9 @@ export const Preloader = ({ children }: { children: React.ReactNode }) => {
             />
 
             <div className="relative z-50 flex flex-col items-center">
-              <motion.p
-                initial={{ x: -300, opacity: 0 }}
-                whileInView={{ x: 0, opacity: 1 }}
-                transition={{ duration: 0.2, delay: 0 }}
-                className="mb-4 neon-text text-3xl font-bold uppercase mb-10"
-              >
+              <p className="mb-4 neon-text text-3xl font-bold uppercase mb-10">
                 Immersive Cinematic UI
-              </motion.p>
+              </p>
 
               <div className="w-64 h-1 bg-gray-700 rounded overflow-hidden">
                 <motion.div

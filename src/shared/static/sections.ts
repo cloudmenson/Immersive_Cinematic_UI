@@ -1,1 +1,1 @@
-export const sections = ["hero", "nature", "energy", "footerCTA"];
+export const sections = ["hero", "nature", "timeline", "energy", "footerCTA"];

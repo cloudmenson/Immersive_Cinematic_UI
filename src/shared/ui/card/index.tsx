@@ -2,7 +2,7 @@ import { motion } from "framer-motion";
 
 import { cn } from "@/shared";
 
-interface IPolygonCard {
+interface ICard {
   src: string;
   mp4: string;
   title: string;
@@ -11,17 +11,10 @@ interface IPolygonCard {
   description: string;
 }
 
-export const PolygonCard = ({
-  src,
-  mp4,
-  title,
-  className,
-  middleTitle,
-  description,
-}: IPolygonCard) => {
+export const Card = ({ src, mp4, title, className, middleTitle, description }: ICard) => {
   return (
     <motion.div
-      viewport={{ once: false, amount: 0.3 }}
+      viewport={{ once: true, amount: 0.3 }}
       whileInView={{ y: 0, scale: 1, opacity: 1 }}
       initial={{ y: 100, scale: 0.6, opacity: 0 }}
       transition={{ duration: 0.8, ease: "backOut" }}
@@ -29,16 +22,14 @@ export const PolygonCard = ({
     >
       <div className="p-[20px] relative z-1 w-full h-full text-center flex flex-col items-center justify-between text-pretty border border-[#343434] rounded-tl-4xl rounded-br-4xl rounded-tr-lg rounded-bl-lg">
         <div className="z-1">
-          <h2 className="mb-4 font-semibold uppercase tracking-widest neon-text xl:text-2xl 2xl:text-4xl">
+          <h2 className="mb-4 font-semibold uppercase tracking-widest neon-text xl:text-2xl 2xl:text-3xl">
             {title}
           </h2>
 
-          <div className="text-[#eaeaea] font-mono sm:text-sm xl:text-base 2xl:text-xl">
-            {middleTitle}
-          </div>
+          <div className="text-[#eaeaea] font-mono sm:text-sm xl:text-base">{middleTitle}</div>
         </div>
 
-        <p className="z-1 text-gray-300 leading-relaxed text-[#eaeaea] mt-auto sm:text-sm xl:text-base 2xl:text-xl">
+        <p className="z-1 text-gray-300 leading-relaxed text-[#eaeaea] mt-auto sm:text-sm xl:text-base">
           {description}
         </p>
 

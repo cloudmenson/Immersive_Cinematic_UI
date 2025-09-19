@@ -1,9 +1,13 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import gsap from "gsap";
 import { motion } from "framer-motion";
+import { ScrollToPlugin } from "gsap/ScrollToPlugin";
 
 import { cn, sections } from "@/shared";
+
+gsap.registerPlugin(ScrollToPlugin);
 
 export const ProgressDots = () => {
   const [active, setActive] = useState(0);
@@ -26,7 +30,17 @@ export const ProgressDots = () => {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  const go = (id: string) => document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
+  const go = (id: string) => {
+    const el = document.getElementById(id);
+
+    if (el) {
+      gsap.to(window, {
+        duration: 2.5,
+        ease: "power2.inOut",
+        scrollTo: { y: el, offsetY: 0 },
+      });
+    }
+  };
 
   return (
     <div className="fixed z-50 bottom-20 left-1/2 -translate-x-1/2 md:bottom-[unset] md:left-[unset] md:right-4 md:top-1/2 md:-translate-y-1/2">
@@ -34,7 +48,7 @@ export const ProgressDots = () => {
         <motion.div
           animate={{ top: active * 12 }}
           style={{ position: "absolute" }}
-          transition={{ type: "spring", stiffness: 300, damping: 30 }}
+          transition={{ duration: 0.4, ease: "easeInOut" }}
           className="absolute left-1/2 -translate-x-1/2 w-6 h-6 rounded-full bg-gradient-to-tr from-green-400 to-blue-500 blur-lg opacity-70 z-5"
         />
 
