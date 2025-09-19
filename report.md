@@ -1,1 +1,2 @@
-LIVE: https://immersive-cinematic-ui.netlify.app
+Live: https://immersive-cinematic-ui.netlify.app
+Video Walkthrough:
