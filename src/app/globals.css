@@ -1,0 +1,35 @@
+@import "tailwindcss";
+
+@import "../styles/fonts.css";
+
+html,
+body {
+  height: 100%;
+  scrollbar-gutter: stable;
+  overscroll-behavior: none;
+  user-select: none;
+}
+
+body {
+  color: #eaeaea;
+  font-family: "Gilroy", system-ui, sans-serif;
+}
+
+::-webkit-scrollbar {
+  width: 0;
+  visibility: hidden;
+}
+
+@layer utilities {
+  .neon-text {
+    color: #eaeaea;
+    text-shadow:
+      0 0 4px rgba(63, 220, 119, 0.9),
+      0 0 7px rgba(63, 220, 119, 0.7),
+      0 0 14px rgba(63, 220, 119, 0.5);
+  }
+
+  .neon-bar {
+    background: linear-gradient(90deg, rgba(16, 232, 124, 0.4), rgba(27, 242, 160, 1) 40%, #3fdc77);
+  }
+}
