@@ -1,4 +1,5 @@
 import gsap from "gsap";
+import { motion } from "framer-motion";
 import { ScrollToPlugin } from "gsap/ScrollToPlugin";
 
 gsap.registerPlugin(ScrollToPlugin);
@@ -33,13 +34,25 @@ export const HeroSection = ({ id, duration, isBackground }: IHeroSection) => {
   return (
     <StickySection id={id} duration={duration} isBackground={isBackground}>
       <div className="relative gap-20 md:gap-50 z-10 flex flex-col w-full h-full items-center justify-center text-center pt-30 sm:pt-0">
-        <div className="flex flex-col gap-2 items-center">
+        <motion.div
+          initial="hidden"
+          animate="visible"
+          className="flex flex-col gap-2 items-center"
+          variants={{
+            hidden: { opacity: 0.4, y: 600 },
+            visible: {
+              y: 0,
+              opacity: 1,
+              transition: { staggerChildren: 0.2, ease: "easeOut", duration: 1 },
+            },
+          }}
+        >
           <Title />
 
-          <div className="uppercase text-md tracking-[5px] px-6 py-3 w-fit bg-green-700/10 font-semibold">
+          <p className="uppercase text-md tracking-[5px] px-6 py-3 w-fit bg-green-700/10 font-semibold">
             Explore New Paths.
-          </div>
-        </div>
+          </p>
+        </motion.div>
 
         <Button text="Explore" onClick={() => nextId && scrollToSection(nextId)} />
       </div>
