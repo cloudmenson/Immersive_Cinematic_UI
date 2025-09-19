@@ -17,11 +17,17 @@ interface IHeroSection {
 const scrollToSection = (id: string) => {
   const el = document.getElementById(id);
 
+  if (!el) return;
+
+  const extra = Math.round(window.innerHeight * 0.06);
+
   if (el) {
     gsap.to(window, {
       duration: 1,
-      ease: "power2.inOut",
-      scrollTo: { y: el, offsetY: 0 },
+      overwrite: "auto",
+      ease: "power4.inOut",
+      scrollTo: { y: el, offsetY: -extra },
+      onUpdate: () => ScrollTrigger.update(),
     });
   }
 };
