@@ -20,7 +20,7 @@ export const FooterCTA = ({ id, duration, isBackground }: IFooterCTA) => {
           Explore the code, deploy, and watch the walkthrough.
         </p>
 
-        <Button text="View" />
+        <Button text="View" onClick={() => null} />
       </div>
     </StickySection>
   );
