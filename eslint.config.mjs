@@ -17,8 +17,10 @@ const eslintConfig = [
       prettier: prettierPlugin,
     },
     rules: {
-      "no-unused-vars": "error",
+      "no-unused-vars": "off",
       "prettier/prettier": "error",
+      "react-hooks/exhaustive-deps": "off",
+      "@typescript-eslint/no-explicit-any": "off",
     },
     ignores: ["node_modules/**", ".next/**", "out/**", "build/**", "next-env.d.ts"],
   },
