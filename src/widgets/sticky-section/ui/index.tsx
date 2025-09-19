@@ -32,28 +32,26 @@ export const StickySection = ({
 
     const tl = gsap.timeline({
       scrollTrigger: {
+        id: id,
         pin: true,
-        scrub: 0.6,
         trigger: el,
+        end: "+=250%",
+        anticipatePin: 1,
         start: "top top",
-        end: "+=200%",
-        snap: {
-          snapTo: 1,
-          duration: 0.6,
-          ease: "power1.inOut",
-        },
+        toggleActions: "play none none reverse",
       },
     });
 
     tl.fromTo(
       el.querySelectorAll("[data-fade]"),
-      { scale: 1, opacity: 1 },
+      { y: 100, scale: 0.6, opacity: 0 },
       {
+        y: 0,
         scale: 1,
         opacity: 1,
-        stagger: 0.2,
-        duration: 0.5,
-        ease: "power3.out",
+        stagger: 0.3,
+        duration: 1.2,
+        ease: "power4.out",
       },
       0.2
     );
@@ -69,7 +67,7 @@ export const StickySection = ({
     <section
       id={id}
       ref={ref}
-      className={cn("relative h-[100svh] w-full overflow-hidden px-5", className)}
+      className={cn("relative min-h-screen w-full overflow-hidden px-5", className)}
     >
       {children}
 

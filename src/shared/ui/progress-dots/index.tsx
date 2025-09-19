@@ -3,11 +3,12 @@
 import { useState, useEffect } from "react";
 import gsap from "gsap";
 import { motion } from "framer-motion";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { ScrollToPlugin } from "gsap/ScrollToPlugin";
 
 import { cn, sections } from "@/shared";
 
-gsap.registerPlugin(ScrollToPlugin);
+gsap.registerPlugin(ScrollToPlugin, ScrollTrigger);
 
 export const ProgressDots = () => {
   const [active, setActive] = useState(0);
@@ -33,17 +34,21 @@ export const ProgressDots = () => {
   const go = (id: string) => {
     const el = document.getElementById(id);
 
-    if (el) {
-      gsap.to(window, {
-        duration: 2.5,
-        ease: "power2.inOut",
-        scrollTo: { y: el, offsetY: 0 },
-      });
-    }
+    if (!el) return;
+
+    const extra = Math.round(window.innerHeight * 0.06);
+
+    gsap.to(window, {
+      duration: 1,
+      overwrite: "auto",
+      ease: "power4.inOut",
+      scrollTo: { y: el, offsetY: -extra },
+      onUpdate: () => ScrollTrigger.update(),
+    });
   };
 
   return (
-    <div className="fixed z-50 bottom-20 left-1/2 -translate-x-1/2 md:bottom-[unset] md:left-[unset] md:right-4 md:top-1/2 md:-translate-y-1/2">
+    <div className="fixed z-50 bottom-10 left-1/2 -translate-x-1/2 md:bottom-[unset] md:left-[unset] md:right-4 md:top-1/2 md:-translate-y-1/2">
       <div className="relative flex gap-3 md:gap-1.5 flex-row md:flex-col md:gap-1 items-center">
         <motion.div
           animate={{ top: active * 12 }}

@@ -5,7 +5,12 @@ import Lenis from "@studio-freight/lenis";
 gsap.registerPlugin(ScrollTrigger);
 
 export const initSmoothScroll = () => {
-  const lenis = new Lenis({ smoothWheel: true, lerp: 0.12 });
+  const lenis = new Lenis({
+    duration: 1.2,
+    smoothWheel: true,
+    touchMultiplier: 2,
+    easing: (t) => 1 - Math.pow(1 - t, 3),
+  });
 
   function raf(time: number) {
     lenis.raf(time);
