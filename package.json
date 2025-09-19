@@ -17,10 +17,10 @@
     ]
   },
   "dependencies": {
-    "clsx": "^2.1.1",
     "@react-three/drei": "^9.122.0",
     "@react-three/fiber": "^8.18.0",
     "@studio-freight/lenis": "^1.0.42",
+    "clsx": "^2.1.1",
     "framer-motion": "^12.23.13",
     "gsap": "^3.13.0",
     "husky-init": "^8.0.0",
