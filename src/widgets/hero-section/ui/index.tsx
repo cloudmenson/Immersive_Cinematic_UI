@@ -1,67 +1,81 @@
-import gsap from "gsap";
+"use client";
+
 import { motion } from "framer-motion";
-import { ScrollToPlugin } from "gsap/ScrollToPlugin";
+import { ChevronDown } from "lucide-react";
 
-gsap.registerPlugin(ScrollToPlugin);
-import { StickySection } from "@/widgets";
+import { Button, site, scrollToSection } from "@/shared";
 
-import { Title } from "./title";
-import { Button, sections } from "@/shared";
-
-interface IHeroSection {
-  id: string;
-  duration?: number;
-  isBackground?: boolean;
-}
-
-const scrollToSection = (id: string) => {
-  const el = document.getElementById(id);
-
-  if (!el) return;
-
-  const extra = Math.round(window.innerHeight * 0.06);
-
-  if (el) {
-    gsap.to(window, {
-      duration: 1,
-      overwrite: "auto",
-      ease: "power4.inOut",
-      scrollTo: { y: el, offsetY: -extra },
-      onUpdate: () => ScrollTrigger.update(),
-    });
-  }
+const REVEAL = {
+  hidden: { opacity: 0, y: 70 },
+  visible: (i: number) => ({
+    opacity: 1,
+    y: 0,
+    transition: { duration: 1.1, delay: 0.15 * i, ease: [0.22, 1, 0.36, 1] as const },
+  }),
 };
 
-export const HeroSection = ({ id, duration, isBackground }: IHeroSection) => {
-  const currentIndex = sections.indexOf(id);
-  const nextId =
-    currentIndex !== -1 && currentIndex < sections.length - 1 ? sections[currentIndex + 1] : "";
+export const HeroSection = ({ id }: { id: string }) => (
+  <section
+    id={id}
+    className="screen relative flex w-full flex-col items-center justify-center px-5 text-center"
+  >
+    <motion.div
+      custom={0}
+      initial="hidden"
+      animate="visible"
+      variants={REVEAL}
+      className="mb-8 flex items-center gap-4"
+    >
+      <span className="h-px w-8 bg-gradient-to-r from-transparent to-lime-400" />
 
-  return (
-    <StickySection id={id} duration={duration} isBackground={isBackground}>
-      <div className="relative gap-20 md:gap-50 z-10 flex flex-col w-full h-full items-center justify-center text-center pt-30 sm:pt-0">
-        <motion.div
-          initial="hidden"
-          animate="visible"
-          className="flex flex-col gap-2 items-center"
-          variants={{
-            hidden: { opacity: 0.4, y: 600 },
-            visible: {
-              y: 0,
-              opacity: 1,
-              transition: { staggerChildren: 0.2, ease: "easeOut", duration: 1 },
-            },
-          }}
-        >
-          <Title />
+      <span className="text-[10px] font-bold uppercase tracking-[0.45em] text-lime-300 sm:text-xs">
+        Scroll-Driven Experience
+      </span>
 
-          <p className="uppercase text-md tracking-[5px] px-6 py-3 w-fit bg-green-700/10 font-semibold">
-            Explore New Paths.
-          </p>
-        </motion.div>
+      <span className="h-px w-8 bg-gradient-to-l from-transparent to-lime-400" />
+    </motion.div>
 
-        <Button text="Explore" onClick={() => nextId && scrollToSection(nextId)} />
-      </div>
-    </StickySection>
-  );
-};
+    <motion.h1
+      custom={1}
+      initial="hidden"
+      animate="visible"
+      variants={REVEAL}
+      className="neon-text text-shadow-deep flex flex-col text-[14vw] font-extrabold uppercase leading-[0.88] tracking-[-0.02em] sm:text-[9.5vw] lg:text-[7.5vw]"
+    >
+      <span>Immersive</span>
+      <span>Cinematic UI</span>
+    </motion.h1>
+
+    <motion.p
+      custom={2}
+      initial="hidden"
+      animate="visible"
+      variants={REVEAL}
+      className="text-shadow-deep mt-8 max-w-lg text-sm leading-relaxed text-fog/85 sm:text-base"
+    >
+      A journey into a future where technology finally learns to grow instead of consume.
+    </motion.p>
+
+    <motion.div
+      custom={3}
+      initial="hidden"
+      animate="visible"
+      variants={REVEAL}
+      className="mt-12 flex flex-col items-center gap-4 sm:flex-row"
+    >
+      <Button text="Explore" onClick={() => scrollToSection("nature")} />
+
+      <Button text="View Code" href={site.repo} variant="ghost" />
+    </motion.div>
+
+    <motion.div
+      aria-hidden="true"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ delay: 1.8, duration: 1 }}
+      className="absolute bottom-32 left-1/2 -translate-x-1/2 md:bottom-14"
+    >
+      <ChevronDown className="h-5 w-5 animate-bounce text-lime-300/70" />
+    </motion.div>
+  </section>
+);

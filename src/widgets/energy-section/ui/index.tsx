@@ -1,30 +1,35 @@
 "use client";
 
+import { energy, Card, SectionHeading } from "@/shared";
 import { StickySection } from "@/widgets";
-import { energy, Card } from "@/shared";
 
-interface IFutureEnergySection {
-  id: string;
-  duration?: number;
-  isBackground?: boolean;
-}
+export const EnergySection = ({ id }: { id: string }) => (
+  <StickySection id={id} className="px-0" contentClassName="mx-auto w-full max-w-7xl">
+    <SectionHeading
+      index="03"
+      eyebrow="Pillars"
+      title="Three Pillars"
+      lead="The systems that carry a civilisation from extraction to symbiosis."
+      className="mb-12 px-5"
+    />
 
-export const EnergySection = ({ id, duration, isBackground }: IFutureEnergySection) => {
-  return (
-    <StickySection id={id} duration={duration} isBackground={isBackground}>
-      <div className="flex flex-col lg:flex-row w-full h-full items-center justify-center z-10 gap-1 md:gap-2 lg:gap-8">
-        {energy.map((card) => (
-          <Card
-            key={card.id}
-            mp4={card.mp4}
-            src={card.src}
-            title={card.title}
-            middleTitle={card.middleTitle}
-            description={card.description}
-            className="w-[92vw] h-[135vw] p-[20px] md:my-[40px] md:w-[25vw] md:h-[100%] lg:p-[40px] lg:w-[25vw] lg:h-[35.5vw]"
-          />
-        ))}
-      </div>
-    </StickySection>
-  );
-};
+    <div className="flex snap-x snap-mandatory gap-4 overflow-x-auto px-5 pb-6 lg:grid lg:grid-cols-3 lg:gap-6 lg:overflow-visible">
+      {energy.map((card, i) => (
+        <Card
+          key={card.id}
+          index={i}
+          video={card.video}
+          poster={card.poster}
+          title={card.title}
+          middleTitle={card.middleTitle}
+          description={card.description}
+          className="h-[27rem] w-[80vw] snap-center sm:h-[29rem] sm:w-[60vw] md:w-[44vw] lg:h-[30rem] lg:w-auto"
+        />
+      ))}
+    </div>
+
+    <p className="px-5 text-[10px] uppercase tracking-[0.35em] text-fog/40 lg:hidden">
+      Swipe to explore →
+    </p>
+  </StickySection>
+);

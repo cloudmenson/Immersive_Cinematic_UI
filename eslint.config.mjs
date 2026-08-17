@@ -21,6 +21,7 @@ const eslintConfig = [
       "prettier/prettier": "error",
       "react-hooks/exhaustive-deps": "off",
       "@typescript-eslint/no-explicit-any": "off",
+      "@next/next/no-img-element": "off",
     },
     ignores: ["node_modules/**", ".next/**", "out/**", "build/**", "next-env.d.ts"],
   },

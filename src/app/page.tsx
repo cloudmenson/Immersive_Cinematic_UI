@@ -2,48 +2,48 @@
 
 import { useEffect } from "react";
 
-import { ProgressDots, initSmoothScroll } from "@/shared";
+import { Cursor, Grain, Preloader, ProgressDots, ScrollProgress, initSmoothScroll } from "@/shared";
 import {
+  Backdrop,
   TreeScene,
-  FooterCTA,
+  SiteHeader,
   HeroSection,
-  VideoBackdrop,
+  CraftSection,
+  OutroSection,
   NatureSection,
   EnergySection,
   TimelineSection,
 } from "@/widgets";
 
 export default function Home() {
-  useEffect(() => {
-    initSmoothScroll();
-  }, []);
+  useEffect(() => initSmoothScroll(), []);
 
   return (
-    <main className="relative">
+    <>
+      <Preloader />
+      <Cursor />
+      <Grain />
+      <ScrollProgress />
+      <SiteHeader />
+
       <div className="pointer-events-none fixed inset-0 z-0">
-        <VideoBackdrop
-          src="/media/video/video-backdrop.webm"
-          mp4="/media/video/video-backdrop.mp4"
-        />
+        <Backdrop />
       </div>
 
-      <div className="pointer-events-none fixed inset-0 z-10">
+      <div className="pointer-events-none fixed inset-0 z-[1]">
         <TreeScene />
       </div>
 
-      <div className="relative z-10">
+      <main id="main" className="relative z-10">
         <ProgressDots />
 
         <HeroSection id="hero" />
-
         <NatureSection id="nature" />
-
         <TimelineSection id="timeline" />
-
         <EnergySection id="energy" />
-
-        <FooterCTA id="footerCTA" />
-      </div>
-    </main>
+        <CraftSection id="craft" />
+        <OutroSection id="outro" />
+      </main>
+    </>
   );
 }

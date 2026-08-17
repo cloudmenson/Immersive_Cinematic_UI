@@ -1,29 +1,38 @@
-export const energy = [
+export interface EnergyCard {
+  id: number;
+  title: string;
+  middleTitle: string;
+  video: string;
+  poster: string;
+  description: string;
+}
+
+export const energy: EnergyCard[] = [
   {
     id: 1,
-    title: "POWER OF NATURE",
+    title: "Power of Nature",
     middleTitle: "Energy of the Future",
-    src: "/media/video/card-video-1.mp4",
-    mp4: "/media/video/card-video-1.webm",
+    video: "/media/video/card-1.mp4",
+    poster: "/media/image/card-1-poster.webp",
     description:
-      "In the future, nature will become not only a source of inspiration, but also the main source of energy. Clean technologies will work in harmony with forests and oceans.",
+      "Forests and oceans stop being scenery and start being infrastructure. Clean systems draw from the living world without draining it.",
   },
   {
     id: 2,
-    title: "GREEN CITIES",
+    title: "Green Cities",
     middleTitle: "Architecture of the Future",
-    src: "/media/video/card-video-2.mp4",
-    mp4: "/media/video/card-video-2.webm",
+    video: "/media/video/card-2.mp4",
+    poster: "/media/image/card-2-poster.webp",
     description:
-      "The megacities of the future are immersed in gardens and rooftop parks. Every building will become part of the ecosystem, and the air will be cleaner than in the mountains.",
+      "Megacities disappear under gardens and rooftop canopies. Every building breathes, filters and gives back more than it takes.",
   },
   {
     id: 3,
-    title: "ARMONY WITH LIFE",
+    title: "Harmony with Life",
     middleTitle: "A New Path of Civilization",
-    src: "/media/video/card-video-3.mp4",
-    mp4: "/media/video/card-video-3.webm",
+    video: "/media/video/card-3.mp4",
+    poster: "/media/image/card-3-poster.webp",
     description:
-      "The future is a union of technology and nature. We will learn to respect every tree and every drop of water, realizing that without them our life is impossible.",
+      "Technology and nature stop competing. We learn to measure progress by what survives us, not by what we consume.",
   },
 ];

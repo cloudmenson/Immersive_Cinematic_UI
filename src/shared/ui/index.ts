@@ -1,4 +1,10 @@
 export { Button } from "./button";
 export { Card } from "./card";
+export { Cursor } from "./cursor";
+export { Grain } from "./grain";
+export { Marquee } from "./marquee";
 export { Preloader } from "./preloader";
 export { ProgressDots } from "./progress-dots";
+export { RevealText } from "./reveal-text";
+export { ScrollProgress } from "./scroll-progress";
+export { SectionHeading } from "./section-heading";

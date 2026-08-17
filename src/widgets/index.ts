@@ -1,8 +1,10 @@
+export { Backdrop } from "./backdrop/ui";
+export { CraftSection } from "./craft-section/ui";
 export { EnergySection } from "./energy-section/ui";
-export { FooterCTA } from "./footer-cta/ui";
 export { HeroSection } from "./hero-section/ui";
 export { NatureSection } from "./nature-section/ui";
+export { OutroSection } from "./outro-section/ui";
+export { SiteHeader } from "./site-header/ui";
 export { StickySection } from "./sticky-section/ui";
-export { TreeScene } from "./tree-scene/ui";
-export { VideoBackdrop } from "./video-backdrop/ui";
 export { TimelineSection } from "./timeline-section/ui";
+export { TreeScene } from "./tree-scene/ui";

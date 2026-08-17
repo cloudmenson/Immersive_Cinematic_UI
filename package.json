@@ -8,7 +8,10 @@
     "lint": "next lint --max-warnings=0",
     "format": "prettier --check .",
     "format:fix": "prettier --write .",
-    "prepare": "husky install"
+    "prepare": "husky || true"
+  },
+  "engines": {
+    "node": ">=20.9.0"
   },
   "lint-staged": {
     "*.{js,jsx,ts,tsx}": [
@@ -17,18 +20,14 @@
     ]
   },
   "dependencies": {
-    "@react-three/drei": "^9.122.0",
-    "@react-three/fiber": "^8.18.0",
     "@studio-freight/lenis": "^1.0.42",
     "clsx": "^2.1.1",
     "framer-motion": "^12.23.13",
     "gsap": "^3.13.0",
-    "husky-init": "^8.0.0",
     "lucide-react": "^0.544.0",
-    "next": "^15.5.3",
-    "postprocessing": "^6.37.8",
-    "react": "18.3.1",
-    "react-dom": "18.3.1",
+    "next": "15.5.23",
+    "react": "19.2.8",
+    "react-dom": "19.2.8",
     "tailwind-merge": "^3.3.1",
     "three": "^0.180.0"
   },
@@ -36,13 +35,14 @@
     "@eslint/eslintrc": "^3",
     "@tailwindcss/postcss": "^4",
     "@types/node": "^20",
-    "@types/react": "^19",
-    "@types/react-dom": "^19",
+    "@types/react": "^19.2.18",
+    "@types/react-dom": "^19.2.4",
     "@types/three": "^0.180.0",
     "eslint": "^9",
-    "eslint-config-next": "15.5.3",
+    "eslint-config-next": "^15.5.23",
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-prettier": "^5.5.4",
+    "husky": "^9.1.7",
     "lint-staged": "^16.1.6",
     "prettier": "^3.6.2",
     "tailwindcss": "^4",

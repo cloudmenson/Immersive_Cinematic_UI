@@ -1,62 +1,53 @@
 "use client";
 
-import { useProgress } from "@react-three/drei";
 import { motion, AnimatePresence } from "framer-motion";
 
-import firstBgLayer from "@/../public/media/image/sun-layer.webp";
-import secondBgLayer from "@/../public/media/image/bg-layer.webp";
+import { useBootProgress } from "@/shared";
 
-export const Preloader = ({ children }: { children: React.ReactNode }) => {
-  const { progress } = useProgress();
+const POSTER = "/media/image/backdrop-poster.webp";
+
+export const Preloader = () => {
+  const { progress, done } = useBootProgress(POSTER);
 
   return (
-    <div className="relative w-full h-screen">
-      <AnimatePresence>
-        {progress < 100 && (
-          <motion.div
-            exit={{ opacity: 0 }}
-            transition={{ duration: 1, delay: 0.3 }}
-            className="fixed inset-0 flex flex-col items-center justify-center text-white z-50"
-          >
-            <div
-              aria-hidden="true"
-              className="absolute inset-0 bg-no-repeat bg-cover z-[40]"
-              style={{
-                backgroundImage: `url(${firstBgLayer.src})`,
-              }}
-            />
+    <AnimatePresence>
+      {!done && (
+        <motion.div
+          data-chrome
+          exit={{ opacity: 0 }}
+          transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+          className="fixed inset-0 z-[70] flex flex-col items-center justify-center bg-ink"
+        >
+          <div
+            aria-hidden="true"
+            className="absolute inset-0 bg-cover bg-center opacity-40"
+            style={{ backgroundImage: `url(${POSTER})` }}
+          />
 
-            <div aria-hidden="true" className="absolute inset-0 bg-black/50 z-[41]" />
+          <div aria-hidden="true" className="absolute inset-0 bg-ink/70" />
 
-            <div
-              aria-hidden="true"
-              className="absolute inset-0 bg-no-repeat bg-cover z-[45]"
-              style={{
-                backgroundImage: `url(${secondBgLayer.src})`,
-              }}
-            />
+          <div className="relative flex flex-col items-center px-6">
+            <p className="neon-text mb-10 text-center text-2xl font-extrabold uppercase tracking-[0.3em] sm:text-3xl">
+              Immersive
+              <br />
+              Cinematic UI
+            </p>
 
-            <div className="relative z-50 flex flex-col items-center">
-              <p className="mb-4 neon-text text-3xl font-bold uppercase mb-10">
-                Immersive Cinematic UI
-              </p>
-
-              <div className="w-64 h-1 bg-gray-700 rounded overflow-hidden">
-                <motion.div
-                  initial={{ width: 0 }}
-                  className="h-1 neon-bar"
-                  animate={{ width: `${progress}%` }}
-                  transition={{ ease: "easeOut", duration: 0.3 }}
-                />
-              </div>
-
-              <p className="mt-2 neon-text font-medium text-sm">{Math.floor(progress)}%</p>
+            <div className="h-[3px] w-56 overflow-hidden rounded bg-white/10 sm:w-72">
+              <motion.div
+                className="neon-bar h-full"
+                initial={{ width: 0 }}
+                animate={{ width: `${progress}%` }}
+                transition={{ ease: "easeOut", duration: 0.3 }}
+              />
             </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
 
-      {children}
-    </div>
+            <p className="mt-4 font-mono text-xs tracking-[0.3em] text-lime-300/80">
+              {String(Math.floor(progress)).padStart(3, "0")}
+            </p>
+          </div>
+        </motion.div>
+      )}
+    </AnimatePresence>
   );
 };

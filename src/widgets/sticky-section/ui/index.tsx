@@ -6,72 +6,61 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 import { cn } from "@/shared";
 
-import { Background } from "./background";
-
 gsap.registerPlugin(ScrollTrigger);
 
 interface IStickySection {
-  id?: string;
-  duration?: number;
+  id: string;
   className?: string;
-  isBackground?: boolean;
+  contentClassName?: string;
   children: React.ReactNode;
 }
 
-export const StickySection = ({
-  id,
-  children,
-  className,
-  duration = 2,
-  isBackground = true,
-}: IStickySection) => {
-  const ref = useRef<HTMLDivElement>(null);
+export const StickySection = ({ id, className, contentClassName, children }: IStickySection) => {
+  const ref = useRef<HTMLElement>(null);
 
   useEffect(() => {
-    const el = ref.current!;
+    const el = ref.current;
 
-    const tl = gsap.timeline({
-      scrollTrigger: {
-        id: id,
-        pin: true,
-        trigger: el,
-        end: "+=250%",
-        anticipatePin: 1,
-        start: "top top",
-        toggleActions: "play none none reverse",
-      },
-    });
+    if (!el) return;
 
-    tl.fromTo(
-      el.querySelectorAll("[data-fade]"),
-      { y: 100, scale: 0.6, opacity: 0 },
-      {
-        y: 0,
-        scale: 1,
-        opacity: 1,
-        stagger: 0.3,
-        duration: 1.2,
-        ease: "power4.out",
-      },
-      0.2
-    );
+    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-    return () => {
-      tl.scrollTrigger?.kill();
+    if (reduced) return;
 
-      tl.kill();
-    };
-  }, [duration]);
+    const ctx = gsap.context(() => {
+      const targets = el.querySelectorAll("[data-fade]");
+
+      if (targets.length) {
+        gsap.fromTo(
+          targets,
+          { y: 60, opacity: 0 },
+          {
+            y: 0,
+            opacity: 1,
+            stagger: 0.15,
+            duration: 1,
+            ease: "power3.out",
+            scrollTrigger: { trigger: el, start: "top 75%" },
+          }
+        );
+      }
+    }, el);
+
+    return () => ctx.revert();
+  }, []);
 
   return (
     <section
       id={id}
       ref={ref}
-      className={cn("relative min-h-screen w-full overflow-hidden px-5", className)}
+      className={cn(
+        "screen relative flex w-full items-center justify-center px-5 py-24",
+        className
+      )}
     >
-      {children}
-
-      {isBackground && <Background />}
+      <div data-inner className={cn("relative z-10 w-full", contentClassName)}>
+        {children}
+      </div>
     </section>
   );
 };

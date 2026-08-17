@@ -1,76 +1,49 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import gsap from "gsap";
-import { motion } from "framer-motion";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { ScrollToPlugin } from "gsap/ScrollToPlugin";
+import { useMemo } from "react";
 
-import { cn, sections } from "@/shared";
-
-gsap.registerPlugin(ScrollToPlugin, ScrollTrigger);
+import { cn, sections, scrollToSection, useActiveSection } from "@/shared";
 
 export const ProgressDots = () => {
-  const [active, setActive] = useState(0);
-
-  useEffect(() => {
-    const onScroll = () => {
-      const tops = sections.map((id) => {
-        const el = document.getElementById(id);
-
-        return el ? Math.abs(el.getBoundingClientRect().top) : Infinity;
-      });
-
-      setActive(tops.indexOf(Math.min(...tops)));
-    };
-
-    onScroll();
-
-    window.addEventListener("scroll", onScroll, { passive: true });
-
-    return () => window.removeEventListener("scroll", onScroll);
-  }, []);
-
-  const go = (id: string) => {
-    const el = document.getElementById(id);
-
-    if (!el) return;
-
-    const extra = Math.round(window.innerHeight * 0.06);
-
-    gsap.to(window, {
-      duration: 1,
-      overwrite: "auto",
-      ease: "power4.inOut",
-      scrollTo: { y: el, offsetY: -extra },
-      onUpdate: () => ScrollTrigger.update(),
-    });
-  };
+  const ids = useMemo(() => sections.map((section) => section.id), []);
+  const active = useActiveSection(ids);
 
   return (
-    <div className="fixed z-50 bottom-10 left-1/2 -translate-x-1/2 md:bottom-[unset] md:left-[unset] md:right-4 md:top-1/2 md:-translate-y-1/2">
-      <div className="relative flex gap-3 md:gap-1.5 flex-row md:flex-col md:gap-1 items-center">
-        <motion.div
-          animate={{ top: active * 12 }}
-          style={{ position: "absolute" }}
-          transition={{ duration: 0.4, ease: "easeInOut" }}
-          className="absolute left-1/2 -translate-x-1/2 w-6 h-6 rounded-full bg-gradient-to-tr from-green-400 to-blue-500 blur-lg opacity-70 z-5"
-        />
+    <nav
+      data-chrome
+      aria-label="Section navigation"
+      className="fixed bottom-[max(1.5rem,env(safe-area-inset-bottom))] left-1/2 z-40 -translate-x-1/2 md:bottom-auto md:left-auto md:right-6 md:top-1/2 md:translate-x-0 md:-translate-y-1/2"
+    >
+      <ul className="flex flex-row items-center gap-2 rounded-full border border-white/10 bg-black/40 px-3 py-2 backdrop-blur-md md:flex-col md:gap-2 md:border-0 md:bg-transparent md:px-0 md:py-0 md:backdrop-blur-none">
+        {sections.map((section, i) => {
+          const isActive = i === active;
 
-        {sections.map((id, i) => (
-          <button
-            key={id}
-            onClick={() => go(id)}
-            aria-label={`Go to ${id}`}
-            className={cn(
-              "relative z-50 flex items-center justify-center h-4 w-4 rounded-full transition cursor-pointer focus:outline-none",
-              i === active
-                ? "scale-125 bg-white/80 border-[0.5px] border-green-700"
-                : "bg-white/40 hover:bg-white/60"
-            )}
-          />
-        ))}
-      </div>
-    </div>
+          return (
+            <li key={section.id}>
+              <button
+                type="button"
+                onClick={() => scrollToSection(section.id)}
+                aria-label={`Go to ${section.label}`}
+                aria-current={isActive ? "true" : undefined}
+                className="group relative flex h-8 w-8 items-center justify-center md:h-6 md:w-6"
+              >
+                <span
+                  className={cn(
+                    "block rounded-full transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)]",
+                    isActive
+                      ? "h-2.5 w-2.5 bg-lime-300 shadow-[0_0_12px_rgba(63,220,119,0.9)]"
+                      : "h-1.5 w-1.5 bg-white/35 group-hover:bg-white/70"
+                  )}
+                />
+
+                <span className="pointer-events-none absolute right-full mr-3 hidden whitespace-nowrap text-[10px] font-semibold uppercase tracking-[0.2em] text-fog/70 opacity-0 transition-opacity duration-300 group-hover:opacity-100 md:block">
+                  {section.label}
+                </span>
+              </button>
+            </li>
+          );
+        })}
+      </ul>
+    </nav>
   );
 };

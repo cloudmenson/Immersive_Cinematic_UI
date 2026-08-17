@@ -1,32 +1,62 @@
-import { motion } from "framer-motion";
-import { ArrowRight } from "lucide-react";
+"use client";
+
+import { ArrowRight, ArrowUpRight } from "lucide-react";
+
+import { cn } from "@/shared";
 
 interface IButton {
   text: string;
-  onClick: () => void;
+  href?: string;
+  onClick?: () => void;
+  className?: string;
+  variant?: "solid" | "ghost";
 }
 
-export const Button = ({ text, onClick }: IButton) => {
-  return (
-    <motion.button
-      onClick={onClick}
-      animate={{ scale: 1, opacity: 1 }}
-      initial={{ scale: 0.95, opacity: 0 }}
-      className="relative cursor-pointer px-10 py-4 uppercase tracking-[2px] font-bold text-green-200 border-2 border-green-400/70 rounded-xl overflow-hidden bg-gradient-to-b from-green-900/30 to-green-800/10 shadow-[0_0_20px_rgba(34,197,94,0.6)]"
-    >
-      <span className="absolute inset-0 bg-[repeating-linear-gradient(0deg,rgba(34,197,94,0.25)_0,rgba(34,197,94,0.25)_1px,transparent_1px,transparent_2px)] pointer-events-none" />
+const BASE =
+  "group relative inline-flex cursor-pointer items-center justify-center overflow-hidden rounded-xl " +
+  "px-8 py-4 text-xs font-bold uppercase tracking-[2px] transition-all duration-300 sm:px-10 sm:text-sm";
 
-      <span className="relative flex items-center gap-2 justify-center z-10">
-        {text} <ArrowRight className="w-5 h-5 text-green-300" />
-      </span>
+const VARIANTS = {
+  solid:
+    "border-2 border-lime-400/70 bg-gradient-to-b from-lime-600/30 to-lime-600/5 text-lime-100 " +
+    "shadow-[0_0_24px_rgba(34,197,94,0.35)] hover:border-lime-400 hover:shadow-[0_0_44px_rgba(34,197,94,0.55)]",
+  ghost: "border border-white/25 text-fog hover:border-lime-400/70 hover:text-lime-100",
+};
 
-      <motion.span
-        initial={{ opacity: 0 }}
-        whileTap={{ scale: 0.98 }}
-        whileHover={{ opacity: 1 }}
-        transition={{ duration: 0.3 }}
-        className="absolute inset-0 bg-green-400/20 blur-md z-10"
+export const Button = ({ text, href, onClick, className, variant = "solid" }: IButton) => {
+  const Icon = href ? ArrowUpRight : ArrowRight;
+  const classes = cn(BASE, VARIANTS[variant], className);
+
+  const content = (
+    <>
+      <span
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-0 bg-[repeating-linear-gradient(0deg,rgba(34,197,94,0.16)_0,rgba(34,197,94,0.16)_1px,transparent_1px,transparent_3px)] opacity-60"
       />
-    </motion.button>
+
+      <span
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-lime-300/25 to-transparent transition-transform duration-700 group-hover:translate-x-full"
+      />
+
+      <span className="relative z-10 flex items-center gap-2">
+        {text}
+        <Icon className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-0.5" />
+      </span>
+    </>
+  );
+
+  if (href) {
+    return (
+      <a href={href} target="_blank" rel="noreferrer noopener" className={classes}>
+        {content}
+      </a>
+    );
+  }
+
+  return (
+    <button type="button" onClick={onClick} className={classes}>
+      {content}
+    </button>
   );
 };
